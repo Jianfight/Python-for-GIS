@@ -6,6 +6,7 @@ import os
 
 # 测试有没有相应矢量数据格式的驱动
 # region Description
+
 # deiver = ogr.GetDriverByName('geojson')
 # print(deiver)
 # # 在检测shape文件的驱动时，名称应为：esri shapefile
@@ -14,11 +15,13 @@ import os
 #
 # # 使用ospybook库检测有没有相应矢量数据格式的驱动
 # pb.print_drivers()
+
 # endregion
 
 
 # 输出一个shape file中的前10条记录
 # region Description
+
 # # 将文件路径存储到变量中
 # fn = r"C:\Users\think\Desktop\python\python-for-GIS-DATA\osgeopy-data\osgeopy-data\global\ne_50m_populated_places.shp"
 #
@@ -51,6 +54,7 @@ import os
 # print(last_feature.NAME)
 #
 # del ds # 在最后删除ds变量，强制关闭文件。
+
 # endregion
 
 
@@ -61,32 +65,69 @@ import os
 # pb.print_attributes(fn, 50, ['NAME', 'POP_MAX'])
 
 # 绘制空间数据
-# 更改工作目录，直接键入文件命就可以读取数据，不需要输入整个文件路径
+# region Description
+
+# # 更改工作目录，直接键入文件命就可以读取数据，不需要输入整个文件路径
 # os.chdir(r"C:\Users\think\Desktop\python\python-for-GIS-DATA\osgeopy-data\osgeopy-data\global")
 #
 # vp = VectorPlotter(False) # 新建一个VectorPlotter类（矢量绘图）向构造函数中传递一个布尔变量，进入交互模式。
 # vp.plot('ne_50m_admin_0_countries.shp', fill=False) # 不填充图形的内部
-# vp.plot('ne_50m_populated_places.shp', 'bo') # bo表示蓝色的圆圈。
+# vp.plot('ne_50m_populated_places.shp', 'bo') # bo表示蓝色的圆圈，b代表蓝色，o代表符号是圆圈。
 # vp.draw()
+
+# endregion
 
 
 # 输出图层的边界坐标
-ds = ogr.Open(r'C:\Users\think\Desktop\python\python-for-GIS-DATA\osgeopy-data\osgeopy-data\Washington\large_cities.geojson')
-lyr = ds.GetLayer(0)
-extent = lyr.GetExtent() # 该函数返回一个元组，为图层对象的边界坐标（min_x, max_x, min_y, max_y）
-print(extent)
+# region Description
 
-# 查看图层中要素的类型
-print(lyr.GetGeomType()) # 查看图层中要素的类型，但是返回的是一个整数。
-# 查看要素的类型
-feature = lyr.GetFeature(0)
-print(feature.geometry().GetGeometryName()) # 查看要素的类型，返回的是字符串（类型描述）
-# 查看图层的空间参考系统
-print(lyr.GetSpatialRef()) # 查看图层的空间参考系统。
+# ds = ogr.Open(r'C:\Users\think\Desktop\python\python-for-GIS-DATA\osgeopy-data\osgeopy-data\Washington\large_cities.geojson')
+# lyr = ds.GetLayer(0)
+# extent = lyr.GetExtent() # 该函数返回一个元组，为图层对象的边界坐标（min_x, max_x, min_y, max_y）
+# print(extent)
+#
+# # 查看图层中要素的类型
+# print(lyr.GetGeomType()) # 查看图层中要素的类型，但是返回的是一个整数。
+# # 查看要素的类型
+# feature = lyr.GetFeature(0)
+# print(feature.geometry().GetGeometryName()) # 查看要素的类型，返回的是字符串（类型描述）
+# # 查看图层的空间参考系统
+# print(lyr.GetSpatialRef()) # 查看图层的空间参考系统。
+#
+# # 通过图层对象的schema属性来获得FieldDefn列表，其中每个对象包含属性列名称及数据类型等信息。
+# for field in lyr.schema:
+#     print(field.name, field.GetTypeName())
 
-# 通过图层对象的schema属性来获得FieldDefn列表，其中每个对象包含属性列名称及数据类型等信息。
-for field in lyr.schema:
-    print(field.name, field.GetTypeName())
+# endregion
+
+# 矢量数据的写入
+# 打开要写入的数据源
+# ds = ogr.Open(r"C:\Users\think\Desktop\python\python-for-GIS-DATA\osgeopy-data\osgeopy-data\global",1)
+# if ds is None:
+#     sys.exit('Could not open folder.')
+#
+# in_lyr = ds.GetLayer('ne_50m_populated_places') # 获取shape文件
+#
+# if ds.GetLayer('capital_cities'):
+#     ds.DeleteLayer('capital_cities') # 如果要创建的图层已经存在将其删除
+#
+# out_lyr = ds.CreateLayer('capital_cities',
+#                          in_lyr.GetSpatialRef(),
+#                          ogr.wkbPoint) # 创建新的图层，几何类型点，空间参考于输入的图层相同
+# out_lyr.CreateFields(in_lyr.schema) # 属性字段与输入坐标相同
+#
+# out_defn = out_lyr.GetLayerDefn() # 获取输入图层的定义信息
+# out_feat = ogr.Feature(out_defn) # 创建一个空的要素
+#
+# for in_feat in in_lyr:
+#     if in_feat.GetField('FEATURECLA') == 'Admin-0 capital':
+#         geom = in_feat.geometry()
+#         out_feat.SetGeometry(geom)
+#         for i in range(in_feat.GetFieldCount()):
+#             value = in_feat.GetField(i)
+#             out_feat.SetField(i,value)
+#         out_lyr.CreateFeature(out_feat)
+# del ds
 
 
 
