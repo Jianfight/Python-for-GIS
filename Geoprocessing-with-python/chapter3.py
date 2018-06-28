@@ -5,7 +5,7 @@ import sys
 import os
 
 # 测试有没有相应矢量数据格式的驱动
-# region Description
+# region
 
 # deiver = ogr.GetDriverByName('geojson')
 # print(deiver)
@@ -20,7 +20,7 @@ import os
 
 
 # 输出一个shape file中的前10条记录
-# region Description
+# region
 
 # # 将文件路径存储到变量中
 # fn = r"C:\Users\think\Desktop\python\python-for-GIS-DATA\osgeopy-data\osgeopy-data\global\ne_50m_populated_places.shp"
@@ -59,13 +59,17 @@ import os
 
 
 # 查看数据
+# region
+
 # 使用ospybook中的print_attributes()函数直接查看属性值，这个函数对于查看小数据的属性信息运行正常，但如果使用他来输出一个大数据的所有属性，
 # 你会后悔的。
 # fn = r"C:\Users\think\Desktop\python\python-for-GIS-DATA\osgeopy-data\osgeopy-data\global\ne_50m_populated_places.shp"
 # pb.print_attributes(fn, 50, ['NAME', 'POP_MAX'])
 
+# endregion
+
 # 绘制空间数据
-# region Description
+# region
 
 # # 更改工作目录，直接键入文件命就可以读取数据，不需要输入整个文件路径
 # os.chdir(r"C:\Users\think\Desktop\python\python-for-GIS-DATA\osgeopy-data\osgeopy-data\global")
@@ -79,7 +83,7 @@ import os
 
 
 # 输出图层的边界坐标
-# region Description
+# region
 
 # ds = ogr.Open(r'C:\Users\think\Desktop\python\python-for-GIS-DATA\osgeopy-data\osgeopy-data\Washington\large_cities.geojson')
 # lyr = ds.GetLayer(0)
@@ -100,7 +104,10 @@ import os
 
 # endregion
 
+
 # 矢量数据的写入
+# region
+
 # 打开要写入的数据源
 # ds = ogr.Open(r"C:\Users\think\Desktop\python\python-for-GIS-DATA\osgeopy-data\osgeopy-data\global",1)
 # if ds is None:
@@ -129,13 +136,103 @@ import os
 #         out_lyr.CreateFeature(out_feat)
 # del ds
 
+# endregion
 
 
+# 创建数据源，写入新的数据，添加属性字段，更新属性值
+# region
+
+# # 创建数据源前，应该考虑好使用什么样的驱动程序，每种驱动程序只知道如何处理操作一种矢量数据类型
+# shape_driver = ogr.GetDriverByName('esri shapefile') # 通过GetDriverByName()函数来获得驱动程序。
+# shape_fn = r"C:\Users\think\Desktop\python\python-for-GIS-DATA" \
+#           r"\osgeopy-data\osgeopy-data\CreateDataSource" # 定义一个数据源的路径
+#
+# if os.path.exists(shape_fn): # 检测一下我们要创建的数据源是否已经存在
+#     shape_driver.DeleteDataSource(shape_fn) # 如果存在，必须使用驱动程序删除相应的数据源，而不是python的内置函数，
+#                                           # 因为驱动程序可以确保所有必须的文件都被删除。
+# shape_ds = shape_driver.CreateDataSource(shape_fn) # 使用驱动程序创建数据源。
+# if shape_ds is None: # 检测一下创建的数据源是否为空。
+#     sys.exit('Could not create {0}.'.format(shape_fn))
+# shape_ds.SyncToDisk()
+#
+# # 打开需要读取的数据源
+# input_fn = r"C:\Users\think\Desktop\python\python-for-GIS-DATA\osgeopy-data\osgeopy-data\global"
+# ds_input = ogr.Open(input_fn,False)
+# if ds_input == None:
+#     sys.exit('Could not open {0}.'.format(input_fn))
+# in_lyr = ds_input.GetLayer('ne_50m_populated_places') # 获取需要进行筛选复制的shp文件
+#
+# # 在创建的数据源中写入数据
+# if shape_ds.GetLayer('capital_cities'):
+#     shape_ds.DeleteLayer('capital_cities') # 如果要创建的图层已经存在将其删除
+#
+# out_lyr = shape_ds.CreateLayer('capital_cities',
+#                          in_lyr.GetSpatialRef(),
+#                          ogr.wkbPoint) # 创建新的图层，几何类型点，空间参考于输入的图层相同
+# out_lyr.CreateFields(in_lyr.schema) # 属性字段与输入坐标相同
+#
+# out_defn = out_lyr.GetLayerDefn() # 获取输入图层的定义信息
+# out_feat = ogr.Feature(out_defn) # 创建一个空的要素
+#
+# for in_feat in in_lyr:
+#     if in_feat.GetField('FEATURECLA') == 'Admin-0 capital':
+#         geom = in_feat.geometry()
+#         out_feat.SetGeometry(geom)
+#         for i in range(in_feat.GetFieldCount()):
+#             value = in_feat.GetField(i)
+#             out_feat.SetField(i,value)
+#         out_lyr.CreateFeature(out_feat)
+#
+# # 在输出的图层中创建新的属性字段
+# coord_fld = ogr.FieldDefn('X', ogr.OFTReal) # 创建新的字段,设置字段名称和字段类型（浮点型）
+# coord_fld.SetWidth(8)      # 设置字段宽度，在shape文件中如果需要设置字段精度，必须先设置字段宽度
+# #coord_fld.SetPrecision(6)  # 设置字段的精度，在本例中因为精度无法判断，故将该行注释
+# out_lyr.CreateField(coord_fld)  # 将设置好的字段添加到图层中
+# coord_fld.SetName('Y')     # 通过更改已创建字段的定义来重用定义新的另一个字段
+# out_lyr.CreateField(coord_fld)
+#
+# # 为新的属性字段添加属性值
+# for feature in out_lyr:
+#     geo = feature.geometry()
+#     x_value = geo.GetX()
+#     # print(x_value,type(x_value))
+#     feature.SetField('X', x_value)
+#     y_value = geo.GetY()
+#     # print(y_value,type(y_value))
+#     feature.SetField('Y', y_value)
+#     out_lyr.SetFeature(feature) # 对每个要素的属性字段添加完属性值后，需要传递更改信息给Layer.SetFeature函数,以更新已有要素的属性值
+#                                 # 在上一个循环（添加要素中并没有使用SetFeature函数），是因为两个循环目的不同，一个是添加，一个是更新，
+#                                 # 所以代码看起来有些不同
+#
+# del ds_input
+# del shape_ds
+
+# endregion
 
 
+# 更改属性字段
+# region
+
+# # 更改已有的属性字段
+# layer_defn = layer.GetLayerDefn()
+# i = layer_defn.GetFieldIndex('X') # 通过属性字段的名称获得，字段值的索引
+# width = layer_defn.GetFieldDefn(i).GetWidth()
+# fld_defn = ogr.FieldDefn('X_coord', ogr.OFTReal) # 设定新的字段
+# fld_defn.SetWidth(width)
+# fld_defn.SetPrecision(4)
+# flag = ogr.ALTER_NAME_FLAG + ogr.ALTER_WIDTH_PRECISION_FLAG # 添加字段需要更改的标识
+# layer.AlterFieldDefn(i, fld_defn, flag) # 使用AlterFieldDefn()函数更改已有的属性字段，将字段的定义更改为新设定的字段的定义。
+
+# endregion
 
 
+# 删除要素
+# region
 
+# layer.DeleteFeature(feature.GetFID()) # 如果删除要素，需要获得要素的FID（要素编号，也成为偏移值）
 
+# 如果删除了很多要素，在文件中可能存在大量不必要的已用空间，就类似Access数据库中删除数据后需要进行压缩或者修复。
+# data_source.ExecuteSQL('REPACK' + layer.GetName()) # 将删除要素后的空间进行释放，对于shape类型的数据可以使用。
 
+# endregion
 
