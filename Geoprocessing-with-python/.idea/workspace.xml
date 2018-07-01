@@ -14,7 +14,7 @@
       <file leaf-file-name="chapter3.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/chapter3.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="174">
+            <state relative-caret-position="552">
               <caret line="119" column="1" selection-start-line="119" selection-start-column="1" selection-end-line="119" selection-end-column="1" />
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
@@ -34,10 +34,14 @@
       <file leaf-file-name="chapter4.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/chapter4.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="222">
-              <caret line="58" column="17" lean-forward="true" selection-start-line="58" selection-start-column="17" selection-end-line="58" selection-end-column="17" />
+            <state relative-caret-position="1322">
+              <caret line="165" lean-forward="true" selection-start-line="165" selection-end-line="165" />
               <folding>
-                <element signature="e#0#11#0" expanded="true" />
+                <element signature="e#0#9#0" expanded="true" />
+                <element signature="e#120#128#0" />
+                <element signature="e#522#530#0" />
+                <element signature="e#885#893#0" />
+                <element signature="e#1843#1851#0" />
               </folding>
             </state>
           </provider>
@@ -61,10 +65,10 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="10" />
-    <option name="y" value="20" />
+    <option name="x" value="1" />
+    <option name="y" value="46" />
     <option name="width" value="1346" />
-    <option name="height" value="728" />
+    <option name="height" value="725" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -163,7 +167,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" weight="0.25" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -190,6 +193,70 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/chapter3.py">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="902">
+          <caret line="119" column="1" selection-start-line="119" selection-start-column="1" selection-end-line="119" selection-end-column="1" />
+          <folding>
+            <element signature="e#0#21#0" expanded="true" />
+            <element signature="e#134#142#0" />
+            <element signature="e#403#411#0" />
+            <element signature="e#1227#1235#0" />
+            <element signature="e#1535#1572#0" />
+            <element signature="e#1929#1937#0" />
+            <element signature="e#3633#3641#0" />
+            <element signature="e#6343#6351#0" />
+            <element signature="e#6814#6822#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chapter4.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1276">
+          <caret line="61" column="16" selection-start-line="61" selection-start-column="16" selection-end-line="61" selection-end-column="16" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+            <element signature="e#120#128#0" />
+            <element signature="e#522#530#0" />
+            <element signature="e#885#893#0" />
+            <element signature="e#1843#1851#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chapter3.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="902">
+          <caret line="119" column="1" selection-start-line="119" selection-start-column="1" selection-end-line="119" selection-end-column="1" />
+          <folding>
+            <element signature="e#0#21#0" expanded="true" />
+            <element signature="e#134#142#0" />
+            <element signature="e#403#411#0" />
+            <element signature="e#1227#1235#0" />
+            <element signature="e#1535#1572#0" />
+            <element signature="e#1929#1937#0" />
+            <element signature="e#3633#3641#0" />
+            <element signature="e#6343#6351#0" />
+            <element signature="e#6814#6822#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chapter4.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1232">
+          <caret line="58" column="17" lean-forward="true" selection-start-line="58" selection-start-column="17" selection-end-line="58" selection-end-column="17" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+            <element signature="e#120#128#0" />
+            <element signature="e#522#530#0" />
+            <element signature="e#885#893#0" />
+            <element signature="e#1843#1851#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chapter3.py">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2442">
           <caret line="227" lean-forward="true" selection-start-line="227" selection-end-line="227" />
           <folding>
@@ -211,7 +278,11 @@
         <state relative-caret-position="66">
           <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
           <folding>
-            <element signature="e#0#11#0" expanded="true" />
+            <element signature="e#0#9#0" expanded="true" />
+            <element signature="e#120#128#0" />
+            <element signature="e#522#530#0" />
+            <element signature="e#885#893#0" />
+            <element signature="e#1843#1851#0" />
           </folding>
         </state>
       </provider>
@@ -272,7 +343,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/chapter3.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="174">
+        <state relative-caret-position="552">
           <caret line="119" column="1" selection-start-line="119" selection-start-column="1" selection-end-line="119" selection-end-column="1" />
           <folding>
             <element signature="e#0#21#0" expanded="true" />
@@ -290,10 +361,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/chapter4.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="222">
-          <caret line="58" column="17" lean-forward="true" selection-start-line="58" selection-start-column="17" selection-end-line="58" selection-end-column="17" />
+        <state relative-caret-position="1322">
+          <caret line="165" lean-forward="true" selection-start-line="165" selection-end-line="165" />
           <folding>
-            <element signature="e#0#11#0" expanded="true" />
+            <element signature="e#0#9#0" expanded="true" />
+            <element signature="e#120#128#0" />
+            <element signature="e#522#530#0" />
+            <element signature="e#885#893#0" />
+            <element signature="e#1843#1851#0" />
           </folding>
         </state>
       </provider>
