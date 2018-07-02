@@ -106,62 +106,79 @@ from ospybook.vectorplotter import VectorPlotter
 # endregion
 
 
-# 网络要素服务（WFS）
-def get_bbox(geom):
-    """Return the bbox based on a geomtry envelope."""
-    return '{0}，{2}，{1}，{3}'.format(*geom.GetEnvelope())
+# 网络要素服务（WFS）<暂时没有相应的数据源，无法产生效果>
+# region
 
-def get_center(geom):
-    """返回几何图形的中心点"""
-    centroid = geom.Centroid()
-    return [centroid.GetY(), centroid.GetX()]
+# def get_bbox(geom):
+#     """Return the bbox based on a geomtry envelope."""
+#     return '{0}，{2}，{1}，{3}'.format(*geom.GetEnvelope())
+#
+# def get_center(geom):
+#     """返回几何图形的中心点"""
+#     centroid = geom.Centroid()
+#     return [centroid.GetY(), centroid.GetX()]
+#
+# def get_state_geom(state_name, file_path):
+#     """返回一个州的几何图形"""
+#     ds = ogr.Open(file_path)
+#     if ds is None:
+#         raise RuntimeError('Could not open the states dataset. Is the path corrent?')
+#     lyr = ds.GetLayer()
+#     lyr.SetAttributeFilter('state = "{0}"'.format(state_name))
+#     feature = next(lyr)
+#     return feature.geometry().Clone()
+#
+# def save_state_gauges(out_fn, wfs_data_url, bbox=None):
+#     """保存wfs数据到geojson文件"""
+#     parms = {
+#         'version': '1.1.0',
+#         'typeNames': 'ahps_gauges:Observed_River_Stages',
+#         'srsName': 'urn:ogc:def:crs:EPSG:6.9:4326',
+#     }
+#     if bbox:
+#         parms['bbox'] = bbox
+#     try:
+#         request = 'WFS:{0}？{1}'.format(wfs_data_url, urllib.urlencode(parms))
+#     except:
+#         request = 'WFS:{0}?{1}'.format(wfs_data_url, urllib.parse.urlencode(parms))
+#     wfs_ds = ogr.Open(request)
+#     if wfs_ds is None:
+#         raise RuntimeError('Could not open WFS.')
+#     wfs_lyr = wfs_ds.GetLayer(0)
+#
+#     driver = ogr.GetDriverByName('GeoJson')
+#     if os.path.exists(out_fn):
+#         driver.DeleteDataSource(out_fn)
+#     json_ds = driver.CreateDataSource(out_fn)
+#     json_ds.CopyLayer(wfs_lyr,'')
+#
+# def make_map(state_name, json_fn, html_fn, file_path, wfs_data_url, **kwargs):
+#     """使用folium库制作地图"""
+#     geom = get_state_geom(state_name, file_path)
+#     save_state_gauges(json_fn, wfs_data_url, get_bbox(geom))
+#     fmap = folium.Map(location=get_center(geom), **kwargs)
+#     fmap.geo_json(geo_path=json_fn)
+#     fmap.create_map(path=html_fn)
+#
+# base_map_file_path = r"C:\Users\think\Desktop\python\python-for-GIS-DATA\osgeopy-data\osgeopy-data\US\states.geojson"
+# wfs_url = "http://gis.srh.noaa.gov/arcgis/services/ahps_gauges/MapServer/WFSServer"
+# make_map('Oklahoma', None, 'ok.html', base_map_file_path, None, zoom_start=7)
 
-def get_state_geom(state_name, file_path):
-    """返回一个州的几何图形"""
-    ds = ogr.Open(file_path)
-    if ds is None:
-        raise RuntimeError('Could not open the states dataset. Is the path corrent?')
-    lyr = ds.GetLayer()
-    lyr.SetAttributeFilter('state = "{0}"'.format(state_name))
-    feature = next(lyr)
-    return feature.geometry().Clone()
+# endregion
 
-def save_state_gauges(out_fn, wfs_data_url, bbox=None):
-    """保存wfs数据到geojson文件"""
-    parms = {
-        'version': '1.1.0',
-        'typeNames': 'ahps_gauges:Observed_River_Stages',
-        'srsName': 'urn:ogc:def:crs:EPSG:6.9:4326',
-    }
-    if bbox:
-        parms['bbox'] = bbox
-    try:
-        request = 'WFS:{0}？{1}'.format(wfs_data_url, urllib.urlencode(parms))
-    except:
-        request = 'WFS:{0}?{1}'.format(wfs_data_url, urllib.parse.urlencode(parms))
-    wfs_ds = ogr.Open(request)
-    if wfs_ds is None:
-        raise RuntimeError('Could not open WFS.')
-    wfs_lyr = wfs_ds.GetLayer(0)
 
-    driver = ogr.GetDriverByName('GeoJson')
-    if os.path.exists(out_fn):
-        driver.DeleteDataSource(out_fn)
-    json_ds = driver.CreateDataSource(out_fn)
-    json_ds.CopyLayer(wfs_lyr,'')
+# 使用TextCapability函数检查驱动、数据源或者图层是否具有某项功能。
+# 这种测试的方法可以用在代码中，在执行某项功能之前，先检查该功能是否能用，如果不能用就输出错误，防止程序崩溃。
+textname = r"C:\Users\think\Desktop\python\python-for-GIS-DATA\osgeopy-data\osgeopy-data\global"
+dataSource = ogr.Open(textname) # 以读的形式打开
+print(dataSource.TestCapability(ogr.ODsCCreateLayer))
 
-def make_map(state_name, json_fn, html_fn, file_path, wfs_data_url, **kwargs):
-    """使用folium库制作地图"""
-    geom = get_state_geom(state_name, file_path)
-    save_state_gauges(json_fn, wfs_data_url, get_bbox(geom))
-    fmap = folium.Map(location=get_center(geom), **kwargs)
-    fmap.geo_json(geo_path=json_fn)
-    fmap.create_map(path=html_fn)
+dataSource_1 = ogr.Open(textname, 1) # 以写的形式打开
+print(dataSource_1.TestCapability(ogr.ODsCCreateLayer))
 
-base_map_file_path = r"C:\Users\think\Desktop\python\python-for-GIS-DATA\osgeopy-data\osgeopy-data\US\states.geojson"
-wfs_url = "http://gis.srh.noaa.gov/arcgis/services/ahps_gauges/MapServer/WFSServer"
-make_map('Oklahoma', 'ok.json', 'ok.html', base_map_file_path, wfs_url, zoom_start=7)
-
+# ospybook模块中的print_capabilities(驱动)可以显示该驱动都具有什么功能
+driver = ogr.GetDriverByName('ESRI fhapefile')
+ospybook.print_capabilities(driver)
 
 
 
