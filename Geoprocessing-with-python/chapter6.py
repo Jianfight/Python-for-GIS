@@ -186,8 +186,68 @@ from ospybook.vectorplotter import VectorPlotter
 #     return line_lyr
 
 # 创建和编辑复合多边形（multipolygons）
+box1 = ogr.Geometry(ogr.wkbLinearRing)
+box1.AddPoint(87.5, 25.5)
+box1.AddPoint(89, 25.5)
+box1.AddPoint(89, 24)
+box1.AddPoint(87.5, 24)
+garden1 = ogr.Geometry(ogr.wkbPolygon)
+garden1.AddGeometry(box1)
 
+box2 = ogr.Geometry(ogr.wkbLinearRing)
+box2.AddPoint(89, 23)
+box2.AddPoint(92, 23)
+box2.AddPoint(92, 22)
+box2.AddPoint(89, 22)
+garden2 = ogr.Geometry(ogr.wkbPolygon)
+garden2.AddGeometry(box2)
 
+# 因为复合多边形是由一个人或多个多边形构成的，所以创建复合多边形向其中添加的是多边形。
+gardens = ogr.Geometry(ogr.wkbMultiPolygon)
+gardens.AddGeometry(garden1)
+gardens.AddGeometry(garden2)
+gardens.CloseRings() # 一次性关闭所有的环
+print(gardens)
+
+vp = VectorPlotter(False)
+vp.plot(gardens)
+
+# 整体移动复合多边形
+for i in range(gardens.GetGeometryCount()):
+    ring = gardens.GetGeometryRef(i).GetGeometryRef(0)
+    for j in range(ring.GetPointCount()):
+        ring.SetPoint(j, ring.GetX(j) + 1,ring.GetY(j) + 0.5)
+vp.plot(gardens, fill=False, ec='red', ls='dashed')
+
+# 创建带有岛的多边形
+lot = ogr.Geometry(ogr.wkbLinearRing)
+lot.AddPoint(58, 38.5)
+lot.AddPoint(53, 6)
+lot.AddPoint(99.5, 19)
+lot.AddPoint(73, 42)
+
+house = ogr.Geometry(ogr.wkbLinearRing)
+house.AddPoint(67.5, 29)
+house.AddPoint(69, 25.5)
+house.AddPoint(64, 23)
+house.AddPoint(69, 15)
+house.AddPoint(82.5, 22)
+house.AddPoint(76, 31.5)
+
+yard = ogr.Geometry(ogr.wkbPolygon)
+yard.AddGeometry(lot)
+yard.AddGeometry(house)
+yard.CloseRings()
+vp.plot(yard, fill=False)
+
+# 移动带有岛的多边形
+for i in range(yard.GetGeometryCount()):
+    ring = yard.GetGeometryRef(i)
+    for j in range(ring.GetPointCount()):
+        ring.SetPoint(j, ring.GetX(j) + 1, ring.GetY(j) + 0.5)
+vp.plot(yard, fill=False, hatch='x', color='blue')
+
+vp.draw()
 
 
 
