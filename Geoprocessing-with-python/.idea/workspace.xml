@@ -61,8 +61,8 @@
       <file leaf-file-name="chapter6.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/chapter6.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="122">
-              <caret line="250" lean-forward="true" selection-start-line="250" selection-end-line="250" />
+            <state relative-caret-position="2904">
+              <caret line="250" selection-start-line="250" selection-end-line="250" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
                 <element signature="e#72#80#0" />
@@ -76,10 +76,11 @@
       <file leaf-file-name="chapter7.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/chapter7.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="484">
-              <caret line="22" lean-forward="true" selection-start-line="22" selection-end-line="22" />
+            <state relative-caret-position="176">
+              <caret line="59" lean-forward="true" selection-start-line="59" selection-end-line="59" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
+                <element signature="e#70#78#0" />
               </folding>
             </state>
           </provider>
@@ -267,7 +268,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="784" extended-state="7" />
+    <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" weight="0.25" />
@@ -293,6 +294,71 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/chapter3.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="902">
+          <caret line="119" column="1" selection-start-line="119" selection-start-column="1" selection-end-line="119" selection-end-column="1" />
+          <folding>
+            <element signature="e#0#21#0" expanded="true" />
+            <element signature="e#134#142#0" />
+            <element signature="e#403#411#0" />
+            <element signature="e#1227#1235#0" />
+            <element signature="e#1535#1572#0" />
+            <element signature="e#1929#1937#0" />
+            <element signature="e#3633#3641#0" />
+            <element signature="e#6343#6351#0" />
+            <element signature="e#6814#6822#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chapter4.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3982">
+          <caret line="181" selection-start-line="181" selection-end-line="181" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+            <element signature="e#3193#3201#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chapter5.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="71" column="30" selection-start-line="71" selection-start-column="30" selection-end-line="71" selection-end-column="30" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+            <element signature="e#93#101#0" />
+            <element signature="e#858#866#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chapter6.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2904">
+          <caret line="250" lean-forward="true" selection-start-line="250" selection-end-line="250" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+            <element signature="e#72#80#0" />
+            <element signature="e#1123#1131#0" />
+            <element signature="e#3092#3100#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chapter7.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="462">
+          <caret line="22" lean-forward="true" selection-start-line="22" selection-end-line="22" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+            <element signature="e#70#78#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/chapter3.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="902">
@@ -696,8 +762,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/chapter6.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="122">
-          <caret line="250" lean-forward="true" selection-start-line="250" selection-end-line="250" />
+        <state relative-caret-position="2904">
+          <caret line="250" selection-start-line="250" selection-end-line="250" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
             <element signature="e#72#80#0" />
@@ -709,10 +775,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/chapter7.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="484">
-          <caret line="22" lean-forward="true" selection-start-line="22" selection-end-line="22" />
+        <state relative-caret-position="176">
+          <caret line="59" lean-forward="true" selection-start-line="59" selection-end-line="59" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
+            <element signature="e#70#78#0" />
           </folding>
         </state>
       </provider>
