@@ -220,7 +220,97 @@ from ospybook.vectorplotter import VectorPlotter
 # endregion
 
 
+# 实例：动物跟踪数据
+# 研究对象：加拉帕戈斯 信天翁的GPS定位数据
+# 从CSV格式的信天翁GPS定位数据提取数据，创建shapefile文件
+csv_fn = r"C:\Users\think\Desktop\python\python-for-GIS-DATA\osgeopy-data\osgeopy-data\Galapagos\Galapagos Albatrosses.csv"
+shp_fn = r"C:\Users\think\Desktop\python\python-for-GIS-DATA\osgeopy-data\osgeopy-data\Galapagos\albatross_dd.shp"
+sr = osr.SpatialReference(osr.SRS_WKT_WGS84) # 设定空间参考为WGS84
 
+# 创建空的图层，规定好图层的属性
+shp_ds = ogr.GetDriverByName('ESRI shapefile').CreateDataSource(shp_fn)
+shp_lyr = shp_ds.CreateLayer('albatross_dd', sr, ogr.wkbPoint)
+shp_lyr.CreateField(ogr.FieldDefn('tag_id', ogr.OFTString))
+shp_lyr.CreateField(ogr.FieldDefn('timestamp', ogr.OFTString))
+shp_row = ogr.Feature(shp_lyr.GetLayerDefn())
+
+# 打开CSV文件，从中提取数据
+csv_ds = ogr.Open(csv_fn)
+csv_lyr = csv_ds.GetLayer()
+for csv_row in csv_lyr:
+    x = csv_row.GetFieldAsDouble('location-long')
+    y = csv_row.GetFieldAsDouble('location-lat')
+    shp_pt = ogr.Geometry(ogr.wkbPoint)
+    shp_pt.AddPoint(x, y)
+    tag_id = csv_row.GetField('individual-local-identifier')
+    timestamp = csv_row.GetField('timestamp')
+    shp_row.SetGeometry(shp_pt)
+    shp_row.SetField('tag_id', tag_id)
+    shp_row.SetField('timestamp', timestamp)
+    shp_lyr.CreateFeature(shp_row)
+
+del csv_ds # 再使用完CSV数据后将其删除
+
+# 剔除图层中GPS定位错误的点
+shp_lyr.SetSpatialFilterRect(-1, -1, 1, 1)
+for shp_row in shp_lyr:
+    shp_lyr.DeleteFeature(shp_row.GetFID())
+shp_lyr.SetSpatialFilter(None)
+shp_ds.ExecuteSQL("REPACK " + shp_lyr.GetName()) # 使用REPACK永久的删除错误点
+shp_ds.ExecuteSQL("RECOMPUTE EXTENT ON " + shp_lyr.GetName()) # 重新计算shapefile的空间范围
+
+# 会直结果
+# vp = VectorPlotter(False)
+# vp.plot(shp_lyr, 'r.')
+
+# 定义一个从属性列表中获得唯一值的方法
+def get_unique(datasource, layer_name, field_name):
+    sql = "SELECT DISTINCT {0} FROM {1}".format(field_name, layer_name)
+    lyr = datasource.ExecuteSQL(sql)
+    values = []
+    for row in lyr:
+        values.append(row.GetField(field_name))
+    datasource.ReleaseResultSet(lyr)
+    return values
+
+# 已经使用ogr2oogr将数据转换为兰伯特等角圆锥投影下的数据
+# 计算相邻点之间的距离
+file_path = r"C:\Users\think\Desktop\python\python-for-GIS-DATA\osgeopy-data\osgeopy-data\Galapagos"
+ds = ogr.Open(file_path, True)
+lyr = ds.GetLayerByName('albatross_lambert')
+if lyr.FindFieldIndex('distance', 0): # 如果距离字段已经存在，将其删除
+    lyr.DeleteField(lyr.FindFieldIndex('distance', 0))
+lyr.CreateFiled(ogr.FieldDefn('distance', ogr.OFTReal)) # 添加一个距离字段
+
+tag_ids = get_unique(ds, 'albatross_lambert', 'tag_id') # 遍历单独的id
+for tag_id in tag_ids:
+    print('Processing ' + tag_id)
+    lyr.SetAttributeFilter("tag_id = {}".format(tag_id))
+    row = next(lyr)
+    # 保存第一次结果和点
+    precious_pt = row.geometry().Clone()
+    precious_time = row.GetField('timestamp')
+    for row in lyr:
+        # 确保点是按照时间顺序排列的
+        current_time = row.GetField('timestamp')
+        if current_time < precious_time:
+            raise Exception('Timestamp out of order') # 如果不是按照时间顺序排列，报错
+        current_pt = row.geometry().Clone()
+        distance = current_pt.Distance(precious_pt)
+        row.SetField('distance', distance) # 将当前时间收集的位置与前一次时间收集的位置间的距离存储在属性表中
+        lyr.SetFeature(row)
+        # 保存本次结果
+        precious_pt = current_pt
+        precious_time = current_time
+
+
+# 添加底图数据
+# background_shp_fn = r"C:\Users\think\Desktop\python\python-for-GIS-DATA\osgeopy-data\osgeopy-data\global\ne_50m_admin_0_countries.shp"
+# background_shp_ds = ogr.Open(background_shp_fn)
+# background_shp_layer = background_shp_ds.GetLayer()
+# background_shp_layer.SetAttributeFilter("continent = 'South America'") # 将背景设定在南美洲
+# vp.plot(background_shp_layer, fill=False)
+# vp.draw()
 
 
 

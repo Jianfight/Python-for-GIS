@@ -82,10 +82,13 @@
       <file leaf-file-name="chapter7.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/chapter7.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="318">
-              <caret line="222" lean-forward="true" selection-start-line="222" selection-end-line="222" />
+            <state relative-caret-position="945">
+              <caret line="305" lean-forward="true" selection-start-line="305" selection-end-line="305" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
+                <element signature="e#102#110#0" />
+                <element signature="e#2007#2015#0" />
+                <element signature="e#4529#4537#0" />
               </folding>
             </state>
           </provider>
@@ -361,10 +364,86 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/chapter7.py">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4818">
+          <caret line="222" lean-forward="true" selection-start-line="222" selection-end-line="222" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+            <element signature="e#102#110#0" />
+            <element signature="e#2007#2015#0" />
+            <element signature="e#4529#4537#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chapter3.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="660">
+          <caret line="108" selection-start-line="108" selection-end-line="108" />
+          <folding>
+            <element signature="e#0#21#0" expanded="true" />
+            <element signature="e#134#142#0" />
+            <element signature="e#403#411#0" />
+            <element signature="e#1227#1235#0" />
+            <element signature="e#1535#1572#0" />
+            <element signature="e#1929#1937#0" />
+            <element signature="e#2581#2589#0" />
+            <element signature="e#3633#3641#0" />
+            <element signature="e#6343#6351#0" />
+            <element signature="e#6814#6822#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chapter4.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="858">
+          <caret line="181" selection-start-line="181" selection-end-line="181" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+            <element signature="e#148#156#0" />
+            <element signature="e#573#581#0" />
+            <element signature="e#959#967#0" />
+            <element signature="e#1940#1948#0" />
+            <element signature="e#3193#3201#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chapter5.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="396">
+          <caret line="20" column="2" selection-start-line="20" selection-start-column="2" selection-end-line="20" selection-end-column="55" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+            <element signature="e#858#866#0" />
+            <element signature="e#2094#2102#0" />
+            <element signature="e#2905#2913#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chapter6.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2904">
+          <caret line="250" selection-start-line="250" selection-end-line="250" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+            <element signature="e#72#80#0" />
+            <element signature="e#1123#1131#0" />
+            <element signature="e#3092#3100#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chapter7.py">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="5896">
           <caret line="271" lean-forward="true" selection-start-line="271" selection-end-line="271" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
+            <element signature="e#102#110#0" />
+            <element signature="e#2007#2015#0" />
+            <element signature="e#4529#4537#0" />
           </folding>
         </state>
       </provider>
@@ -435,6 +514,9 @@
           <caret line="59" lean-forward="true" selection-start-line="59" selection-end-line="59" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
+            <element signature="e#102#110#0" />
+            <element signature="e#2007#2015#0" />
+            <element signature="e#4529#4537#0" />
           </folding>
         </state>
       </provider>
@@ -505,6 +587,9 @@
           <caret line="22" lean-forward="true" selection-start-line="22" selection-end-line="22" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
+            <element signature="e#102#110#0" />
+            <element signature="e#2007#2015#0" />
+            <element signature="e#4529#4537#0" />
           </folding>
         </state>
       </provider>
@@ -978,10 +1063,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/chapter7.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="318">
-          <caret line="222" lean-forward="true" selection-start-line="222" selection-end-line="222" />
+        <state relative-caret-position="945">
+          <caret line="305" lean-forward="true" selection-start-line="305" selection-end-line="305" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
+            <element signature="e#102#110#0" />
+            <element signature="e#2007#2015#0" />
+            <element signature="e#4529#4537#0" />
           </folding>
         </state>
       </provider>
