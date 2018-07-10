@@ -2,6 +2,7 @@ import os
 import ogr
 from osgeo import osr
 from ospybook.vectorplotter import VectorPlotter
+import time
 
 # 叠加数据分析
 # region
@@ -278,22 +279,28 @@ def get_unique(datasource, layer_name, field_name):
 file_path = r"C:\Users\think\Desktop\python\python-for-GIS-DATA\osgeopy-data\osgeopy-data\Galapagos"
 ds = ogr.Open(file_path, True)
 lyr = ds.GetLayerByName('albatross_lambert')
+
 if lyr.FindFieldIndex('distance', 0): # 如果距离字段已经存在，将其删除
     lyr.DeleteField(lyr.FindFieldIndex('distance', 0))
-lyr.CreateFiled(ogr.FieldDefn('distance', ogr.OFTReal)) # 添加一个距离字段
+lyr.CreateField(ogr.FieldDefn('distance', ogr.OFTReal)) # 添加一个距离字段
 
 tag_ids = get_unique(ds, 'albatross_lambert', 'tag_id') # 遍历单独的id
 for tag_id in tag_ids:
     print('Processing ' + tag_id)
-    lyr.SetAttributeFilter("tag_id = {}".format(tag_id))
+    lyr.SetAttributeFilter("tag_id = '{}'".format(tag_id)) # 千万别忘了{}的两侧有单引号，否则SQL语句将不成立
     row = next(lyr)
     # 保存第一次结果和点
     precious_pt = row.geometry().Clone()
-    precious_time = row.GetField('timestamp')
+    # precious_name = row.GetField('tag_id') # 因为动物GPS数据是记录了多只信天瓮的飞行数据，当载入下一只信天瓮的时间戳时必然比上一只信天瓮的初始时间小
+    precious_time = time.mktime(time.strptime(row.GetField('timestamp'), '%Y-%m-%d %H:%M:%S.%f')) # 将时间的形式转换为时间戳，
+                                                                     # 先将数据中的时间转换为格式化元组，再将时间元组转换为时间戳
+    # print(precious_time) # 检查错误时添加的代码
     for row in lyr:
         # 确保点是按照时间顺序排列的
-        current_time = row.GetField('timestamp')
-        if current_time < precious_time:
+        current_time = time.mktime(time.strptime(row.GetField('timestamp'), '%Y-%m-%d %H:%M:%S.%f'))
+        # current_name = row.GetField('tag_id')
+        # print(current_time) # 检出错误时使用的代码
+        if current_time < precious_time : # 只用当是同一个代号出现时间排列错误时才报错and current_name == precious_name
             raise Exception('Timestamp out of order') # 如果不是按照时间顺序排列，报错
         current_pt = row.geometry().Clone()
         distance = current_pt.Distance(precious_pt)
@@ -301,8 +308,39 @@ for tag_id in tag_ids:
         lyr.SetFeature(row)
         # 保存本次结果
         precious_pt = current_pt
+        # precious_name = current_name
         precious_time = current_time
+del ds # 在计算完相邻点距离后可以讲数据源删除
 
+# 在计算完相邻点的距离后可以通过SQL语句筛选出GPS定位点之间飞行的最大距离
+ds = ogr.Open(file_path)
+for tag_id in get_unique(ds, 'albatross_lambert', 'tag_id'):
+    sql = """SELECT MAX(distance) FROM albatross_lambert
+             WHERE tag_id = '{0}'""".format(tag_id)
+    lyr = ds.ExecuteSQL(sql)
+    for row in lyr:
+        print('{0}: {1}'.format(tag_id, row.GetField(0)))
+del ds
+
+# 计算GPS采样间隔中的最大飞行速度和所耗时间，但是该最大速度不一定准确，因为鸟在GPS采样间隔期间不一定一直在飞行
+date_format = '%Y-%m-%d %H:%M:%S.%f'
+ds = ogr.Open(file_path)
+lyr = ds.GetLayerByName('albatross_lambert')
+for tag_id in get_unique(ds, 'albatross_lambert', 'tag_id'):
+    max_speed = 0
+    lyr.SetAttributeFilter("tag_id = '{}'".format(tag_id))  # 千万别忘了{}的两侧有单引号，否则SQL语句将不成立
+    row = next(lyr)
+    ts = row.GetField('timestamp')
+    previous_time = time.mktime(time.strptime(ts, date_format))
+    for row in lyr:
+        ts = row.GetField('timestamp')
+        current_time = time.mktime(time.strptime(ts, date_format))
+        elapsed_time = current_time - previous_time
+        hours = elapsed_time / 3600
+        distance = row.GetField('distance')
+        speed = distance / hours
+        max_speed = max(max_speed, speed)
+    print('Max speed for {0}: {1} m/h'.format(tag_id, max_speed))
 
 # 添加底图数据
 # background_shp_fn = r"C:\Users\think\Desktop\python\python-for-GIS-DATA\osgeopy-data\osgeopy-data\global\ne_50m_admin_0_countries.shp"

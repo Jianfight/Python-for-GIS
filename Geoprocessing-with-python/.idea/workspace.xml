@@ -82,8 +82,8 @@
       <file leaf-file-name="chapter7.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/chapter7.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="945">
-              <caret line="305" lean-forward="true" selection-start-line="305" selection-end-line="305" />
+            <state relative-caret-position="758">
+              <caret line="343" lean-forward="true" selection-start-line="343" selection-end-line="343" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
                 <element signature="e#102#110#0" />
@@ -302,6 +302,19 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/chapter7.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2200">
+          <caret line="305" lean-forward="true" selection-start-line="305" selection-end-line="305" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+            <element signature="e#102#110#0" />
+            <element signature="e#2007#2015#0" />
+            <element signature="e#4529#4537#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/chapter3.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="660">
@@ -1063,8 +1076,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/chapter7.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="945">
-          <caret line="305" lean-forward="true" selection-start-line="305" selection-end-line="305" />
+        <state relative-caret-position="758">
+          <caret line="343" lean-forward="true" selection-start-line="343" selection-end-line="343" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
             <element signature="e#102#110#0" />
