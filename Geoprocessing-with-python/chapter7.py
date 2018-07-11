@@ -11,6 +11,7 @@ import time
 # 提取沼泽的数据
 # file_path = r"C:\Users\think\Desktop\python\python-for-GIS-DATA\osgeopy-data\osgeopy-data\US\wtrbdyp010.shp"
 # water_ds = ogr.Open(file_path)
+# print(water_ds)
 # water_lyr = water_ds.GetLayer(0)
 # water_lyr.SetAttributeFilter('WaterbdyID = 1011327')
 # marsh_feat = water_lyr.GetNextFeature()
@@ -26,10 +27,10 @@ import time
 # nola_feat = nola_lyr.GetNextFeature()
 # nola_geom = nola_feat.geometry().Clone()
 # vp.plot(nola_geom, fill=False, ec='red', ls='dashed', lw=3)
-#
-# # 提取两数据相交的部分
-# # intersection = marsh_geom.Intersection(nola_geom)
-# # vp.plot(intersection, 'yellow', hatch='x')
+
+# 提取两数据相交的部分
+# intersection = marsh_geom.Intersection(nola_geom)
+# vp.plot(intersection, 'yellow', hatch='x')
 # vp.draw()
 #
 # # 提取新奥尔良市的湿地面积
@@ -260,8 +261,8 @@ shp_lyr.SetSpatialFilter(None)
 shp_ds.ExecuteSQL("REPACK " + shp_lyr.GetName()) # 使用REPACK永久的删除错误点
 shp_ds.ExecuteSQL("RECOMPUTE EXTENT ON " + shp_lyr.GetName()) # 重新计算shapefile的空间范围
 
-# 会直结果
-# vp = VectorPlotter(False)
+# 绘制结果
+vp = VectorPlotter(False)
 # vp.plot(shp_lyr, 'r.')
 
 # 定义一个从属性列表中获得唯一值的方法
@@ -341,13 +342,105 @@ for tag_id in get_unique(ds, 'albatross_lambert', 'tag_id'):
         speed = distance / hours
         max_speed = max(max_speed, speed)
     print('Max speed for {0}: {1} m/h'.format(tag_id, max_speed))
+del ds
 
-# 添加底图数据
+# 为每只鸟创建凸包多边形
+ds = ogr.Open(file_path, True)
+pt_lyr = ds.GetLayerByName('albatross_lambert')
+if ds.GetLayerByName('albatross_ranges'):
+    ds.DeleteLayer('albatross_ranges')
+poly_lyr = ds.CreateLayer('albatross_ranges', pt_lyr.GetSpatialRef(), ogr.wkbPolygon)
+
+id_field = ogr.FieldDefn('tag_id', ogr.OFTString)
+area_field = ogr.FieldDefn('area', ogr.OFTReal) # 创建一个足够大的面积字段来存储面积
+area_field.SetWidth(30)
+area_field.SetPrecision(4)
+location_field = ogr.FieldDefn('location', ogr.OFTString) # 创建一个用于存储点位于小岛附近还是大陆附近的字段
+poly_lyr.CreateFields([id_field, area_field, location_field])
+poly_row = ogr.Feature(poly_lyr.GetLayerDefn())
+
+# 该方法是为每只鸟创建一个凸多边形，并不会考虑是否位于陆地附近
+# for tag_id in get_unique(ds, 'albatross_lambert', 'tag_id'):
+#     print('Processing ' + tag_id)
+#     pt_lyr.SetAttributeFilter("tag_id = '{}'".format(tag_id))
+#     locations = ogr.Geometry(ogr.wkbMultiPoint)
+#     for pt_row in pt_lyr: # 用来表示位置的多点几何对象
+#         locations.AddGeometry(pt_row.geometry().Clone())
+#
+#     # homerange = locations.ConvexHull()
+#     # print(homerange)
+#     poly_row.SetGeometry(locations.ConvexHull()) # 创建凸包多边形
+#     poly_row.SetField('tag_id', tag_id)
+#     poly_row.SetField('area', locations.ConvexHull().GetArea())
+#     poly_lyr.CreateFeature(poly_row)
+# print(poly_lyr)
+# vp.plot(poly_lyr, fill=False)
+
+#创建地理区域分割的凸多边形
+land_lyr = ds.GetLayerByName('land_lambert')
+land_row = next(land_lyr)
+land_poly = land_row.geometry().Buffer(100000) # 创建缓冲多边形
+
+for tag_id in get_unique(ds, 'albatross_lambert', 'tag_id'):
+    print('Processing ' + tag_id)
+    pt_lyr.SetAttributeFilter("tag_id = '{}'".format(tag_id))
+    pt_locations = ogr.Geometry(ogr.wkbMultiPoint)
+    last_location = None
+    for pt_row in pt_lyr:
+        pt = pt_row.geometry().Clone()
+        if not land_poly.Contains(pt): # 跳过不在陆地缓冲区域的点
+            continue
+        if pt.GetX() < -2800000: # 辨别出位于海洋的那一侧
+            location = 'island'
+        else:
+            location = 'mainland'
+        if location != last_location:
+           if pt_locations.GetGeometryCount() > 2:
+               homerange = pt_locations.ConvexHull() # 创建凸包多边形
+               poly_row.SetGeometry(homerange)
+               poly_row.SetField('tag_id', tag_id)
+               poly_row.SetField('area', homerange.GetArea())
+               poly_row.SetField('location', last_location)
+               poly_lyr.CreateFeature(poly_row)
+           pt_locations = ogr.Geometry(ogr.wkbMultiPoint)
+           last_location = location
+        pt_locations.AddGeometry(pt)
+
+
+    if pt_locations.GetGeometryCount() > 2:
+        homerange = pt_locations.ConvexHull()  # 创建凸包多边形
+        poly_row.SetGeometry(homerange)
+        poly_row.SetField('tag_id', tag_id)
+        poly_row.SetField('area', homerange.GetArea())
+        poly_row.SetField('location', last_location)
+        poly_lyr.CreateFeature(poly_row)
+# vp.plot(poly_lyr)
+del ds
+
+# 计算鸟儿到岛屿访问时，公共区域所占总面积的比例。
+ds = ogr.Open(file_path)
+lyr = ds.GetLayerByName('albatross_ranges2')
+lyr.SetAttributeFilter("tag_id = '1163-1163' and location = 'island'")
+row = next(lyr)
+all_areas = row.geometry().Clone()
+common_areas = row.geometry().Clone()
+for row in lyr:
+    all_areas = all_areas.Union(row.geometry())
+    common_areas = common_areas.Intersection(row.geometry())
+percent = common_areas.GetArea() / all_areas.GetArea() * 100
+print('Percent of all area used in every visit: {0}'.format(percent))
+
+# # 添加底图数据(加拉帕戈斯地区)
+# land_lyr = ds.GetLayerByName('land_lambert')    #获取的底图
+# vp.plot(land_lyr, fill=False, ec='red')
+
+
+# 添加底图数据(南美洲地区)
 # background_shp_fn = r"C:\Users\think\Desktop\python\python-for-GIS-DATA\osgeopy-data\osgeopy-data\global\ne_50m_admin_0_countries.shp"
 # background_shp_ds = ogr.Open(background_shp_fn)
 # background_shp_layer = background_shp_ds.GetLayer()
 # background_shp_layer.SetAttributeFilter("continent = 'South America'") # 将背景设定在南美洲
-# vp.plot(background_shp_layer, fill=False)
+# vp.plot(background_shp_layer)
 # vp.draw()
 
 
