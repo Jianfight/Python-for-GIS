@@ -14,7 +14,7 @@
       <file leaf-file-name="chapter3.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/chapter3.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="880">
+            <state relative-caret-position="22">
               <caret line="148" column="1" selection-start-line="148" selection-start-column="1" selection-end-line="148" selection-end-column="1" />
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
@@ -34,7 +34,7 @@
       <file leaf-file-name="chapter4.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/chapter4.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="858">
+            <state relative-caret-position="462">
               <caret line="181" selection-start-line="181" selection-end-line="181" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
@@ -51,8 +51,8 @@
       <file leaf-file-name="chapter5.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/chapter5.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="396">
-              <caret line="20" column="2" selection-start-line="20" selection-start-column="2" selection-end-line="20" selection-end-column="55" />
+            <state relative-caret-position="286">
+              <caret line="15" column="45" selection-start-line="15" selection-start-column="25" selection-end-line="15" selection-end-column="45" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
                 <element signature="e#858#866#0" />
@@ -78,13 +78,25 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="chapter7.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="chapter7.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/chapter7.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="122">
-              <caret line="431" lean-forward="true" selection-start-line="431" selection-end-line="431" />
+              <caret line="431" selection-start-line="431" selection-end-line="431" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="chapter8.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/chapter8.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="462">
+              <caret line="72" selection-start-line="72" selection-end-line="72" />
+              <folding>
+                <element signature="e#0#32#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -112,6 +124,7 @@
         <option value="$PROJECT_DIR$/chapter5.py" />
         <option value="$PROJECT_DIR$/chapter6.py" />
         <option value="$PROJECT_DIR$/chapter7.py" />
+        <option value="$PROJECT_DIR$/chapter8.py" />
       </list>
     </option>
   </component>
@@ -126,7 +139,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -138,6 +150,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -155,25 +168,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.chapter7">
-    <configuration name="chapter3" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="Geoprocessing-with-python" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/chapter3.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-    </configuration>
+  <component name="RunManager" selected="Python.chapter8">
     <configuration name="chapter4" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="Geoprocessing-with-python" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -246,20 +241,38 @@
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
     </configuration>
+    <configuration name="chapter8" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="Geoprocessing-with-python" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/chapter8.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
     <list>
-      <item itemvalue="Python.chapter3" />
       <item itemvalue="Python.chapter4" />
       <item itemvalue="Python.chapter5" />
       <item itemvalue="Python.chapter6" />
       <item itemvalue="Python.chapter7" />
+      <item itemvalue="Python.chapter8" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.chapter8" />
         <item itemvalue="Python.chapter7" />
         <item itemvalue="Python.chapter6" />
         <item itemvalue="Python.chapter5" />
         <item itemvalue="Python.chapter4" />
-        <item itemvalue="Python.chapter3" />
       </list>
     </recent_temporary>
   </component>
@@ -303,16 +316,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/chapter7.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2200">
-          <caret line="305" lean-forward="true" selection-start-line="305" selection-end-line="305" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/chapter3.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="660">
@@ -985,34 +988,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/chapter4.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="858">
-          <caret line="181" selection-start-line="181" selection-end-line="181" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-            <element signature="e#148#156#0" />
-            <element signature="e#573#581#0" />
-            <element signature="e#959#967#0" />
-            <element signature="e#1940#1948#0" />
-            <element signature="e#3193#3201#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/chapter5.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="396">
-          <caret line="20" column="2" selection-start-line="20" selection-start-column="2" selection-end-line="20" selection-end-column="55" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-            <element signature="e#858#866#0" />
-            <element signature="e#2094#2102#0" />
-            <element signature="e#2905#2913#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/chapter6.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2904">
@@ -1028,7 +1003,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/chapter3.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="880">
+        <state relative-caret-position="22">
           <caret line="148" column="1" selection-start-line="148" selection-start-column="1" selection-end-line="148" selection-end-column="1" />
           <folding>
             <element signature="e#0#21#0" expanded="true" />
@@ -1047,9 +1022,47 @@
     <entry file="file://$PROJECT_DIR$/chapter7.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="122">
-          <caret line="431" lean-forward="true" selection-start-line="431" selection-end-line="431" />
+          <caret line="431" selection-start-line="431" selection-end-line="431" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chapter4.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="462">
+          <caret line="181" selection-start-line="181" selection-end-line="181" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+            <element signature="e#148#156#0" />
+            <element signature="e#573#581#0" />
+            <element signature="e#959#967#0" />
+            <element signature="e#1940#1948#0" />
+            <element signature="e#3193#3201#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chapter5.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="286">
+          <caret line="15" column="45" selection-start-line="15" selection-start-column="25" selection-end-line="15" selection-end-column="45" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+            <element signature="e#858#866#0" />
+            <element signature="e#2094#2102#0" />
+            <element signature="e#2905#2913#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chapter8.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="462">
+          <caret line="72" selection-start-line="72" selection-end-line="72" />
+          <folding>
+            <element signature="e#0#32#0" expanded="true" />
           </folding>
         </state>
       </provider>
