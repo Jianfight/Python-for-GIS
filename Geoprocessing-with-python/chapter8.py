@@ -1,6 +1,7 @@
 from osgeo import ogr, osr, gdal
 import ospybook
 from ospybook.vectorplotter import VectorPlotter
+import pyproj
 vp = VectorPlotter(False) # 用于显示几何成果
 
 # 创建控件参考对象
@@ -71,15 +72,35 @@ vp = VectorPlotter(False) # 用于显示几何成果
 #     out_lyr.CreateFeature(out_feat)
 
 
+# 使用pyproj库进行空间转换
+# 投影到UTM坐标系下
+utm_proj = pyproj.Proj(init='epsg:32631')
+x, y = utm_proj(2.294694, 48.858093)
+print(x, y)
+# 将UTM坐标系下的坐标转换为地理坐标,将inverse参数设置为True
+x1, y1 = utm_proj(x, y, inverse=True)
+print(x1, y1)
 
+# 在两个基准之间进行转换
+wgs84 = pyproj.Proj('+proj=utm +zone=18 +datum=WGS84')
+nad27 = pyproj.Proj('+proj=utm +zone=18 +datum=NAD27')
+x, y = pyproj.transform(wgs84, nad27, 580744.32, 4504695.26) # 坐标数据为在WGS84下的数据
+print(x, y) # 从出输出中可以看出相同的投影方式但是使用不同的基准，坐标值差值很大
 
+# 计算大圆距离（大地线）
+la_lat, la_lon = 34.0500, -118.2500
+berlin_lat, berlin_lon = 52.5167, 13.3833
+geod = pyproj.Geod(ellps='WGS84')
+forward, back, dist = geod.inv(la_lon, la_lat, berlin_lon, berlin_lat) # 该函数可以计算出前后方位角和大地线
+print("forward: {}\nback: {}\ndist: {}".format(forward, back, dist))
+# 通过一个位置的经纬度、方位角和距离计算目标点的经纬度
+x, y, bearing = geod.fwd(berlin_lon, berlin_lat, back, dist)
+print('{}, {}\n{}'.format(x, y, bearing))
 
-
-
-
-
-
-
+# 可以通过传递起始坐标、结束坐标和所需点的数量，来获得沿着大圆线的等间距坐标列表
+coords = geod.npts(la_lon, la_lat, berlin_lon, berlin_lat, 100)
+for i in range(3):
+    print(coords[i])
 
 
 
