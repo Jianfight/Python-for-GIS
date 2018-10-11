@@ -20,8 +20,10 @@ in_ds = gdal.Open(band1_fn)
 in_band = in_ds.GetRasterBand(1) # 波段索引从1开始，而不是0
 gtiff_driver = gdal.GetDriverByName('GTiff')
 out_ds = gtiff_driver.Create('nat_color.tif', in_band.XSize, in_band.YSize, 3, in_band.DataType)
+
+# 定义输出数据集的空间位置
 out_ds.SetProjection(in_ds.GetProjection())
-out_ds.SetGeoTransform(in_ds.GetGeoTransform())
+out_ds.SetGeoTransform(in_ds.GetGeoTransform()) # geotransform，它提供原始坐标和像素大小，并伴随着旋转值，其可以使影像朝北。
 
 # 从输入波段复制像素到输出波段3
 in_data = in_band.ReadAsArray()
