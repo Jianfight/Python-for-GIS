@@ -49,26 +49,83 @@ from PyQt4 import QtGui
 # sys.exit(app.exec_())
 # endregion
 
-from PyQt4 import QtCore # 因为下面的代码设计到程序的关闭，故在此引入该模块
-class Quitbutton(QtGui.QWidget): # 定义一个类，其继承与QtGui.QWidget这个大类。
-    def __init__(self,parent=None): # 定义该类的构造函数，parent=None代表将QWidget设置为mainwindow，而不是QiGui(暂时不太理解)
-        QtGui.QWidget.__init__(self) # 初始化父类的构造函数
+# region 添加一个关闭按钮
+# from PyQt4 import QtCore # 因为下面的代码设计到程序的关闭，故在此引入该模块
+# class Quitbutton(QtGui.QWidget): # 定义一个类，其继承与QtGui.QWidget这个大类。
+#     def __init__(self,parent=None): # 定义该类的构造函数，parent=None代表将QWidget设置为mainwindow，而不是QiGui(暂时不太理解)
+#         QtGui.QWidget.__init__(self) # 初始化父类的构造函数
+#
+#         self.setGeometry(300,300,350,250) # 设置窗口的位置和大小，前两个表示窗口的位置，后两个表示窗口的大小
+#         self.setWindowTitle(u'关闭按钮')
+#         self.setWindowIcon(QtGui.QIcon('111.ico')) # 指定使用的图标的位置。
+#         # 创建一个按钮。
+#         quit = QtGui.QPushButton(u'关闭', self)
+#         quit.setGeometry(10,10,60,35) # 设置按钮的位置和大小。
+#         self.connect(quit, QtCore.SIGNAL('clicked()'), QtGui.qApp, QtCore.SLOT('quit()'))
+#         # 该句代码是将按钮的单击事件绑定给相应的图形界面程序并为事件触发后的处理设置关联函数。
+#         #通过调用QObject对象的connect函数来将某个对象的信号和另外一个对象的槽函数相关联，当发射者发射信号时，接收者的槽函数将被调用。
+#         # 信号处理：signal 和 slot 构建出一个信号和槽的关系（信号和槽机制是QT的核心机制。）但控件的事件触发后，对象就会将信号发射出去，
+#         # 槽在接受到信号后调用相应的函数。
+#
+# app = QtGui.QApplication(sys.argv)
+# quit = Quitbutton()
+# quit.show()
+# sys.exit(app.exec_())
+# endregion
 
-        self.setGeometry(300,300,350,250) # 设置窗口的位置和大小，前两个表示窗口的位置，后两个表示窗口的大小
-        self.setWindowTitle(u'关闭按钮')
-        self.setWindowIcon(QtGui.QIcon('111.ico')) # 指定使用的图标的位置。
-        # 创建一个按钮。
-        quit = QtGui.QPushButton(u'关闭', self)
-        quit.setGeometry(10,10,60,35) # 设置按钮的位置和大小。
-        self.connect(quit, QtCore.SIGNAL('clicked()'), QtGui.qApp, QtCore.SLOT('quit()'))
-        # 该句代码是将按钮的单击事件绑定给相应的图形界面程序并为事件触发后的处理设置关联函数。
-        #通过调用QObject对象的connect函数来将某个对象的信号和另外一个对象的槽函数相关联，当发射者发射信号时，接收者的槽函数将被调用。
-        # 信号处理：signal 和 slot 构建出一个信号和槽的关系（信号和槽机制是QT的核心机制。）但控件的事件触发后，对象就会将信号发射出去，
-        # 槽在接受到信号后调用相应的函数。
+# region 为窗体添加一个关闭提示类型的消息窗口。
+# class MessageBox(QtGui.QWidget):
+#     def __init__(self, parent=None):
+#         QtGui.QWidget.__init__(self)
+#         self.setGeometry(300,300,350,350)
+#         self.setWindowTitle(u'消息窗口')
+#
+#     # 对于定义这个函数后，程序是如何调用的，还不太了解，有待研究。
+#     def closeEvent(self, event): # 定义一个消息提示函数,在pyqt中本身就有closeEvent关闭事件对应的函数，如果我们需要更改，就需要重新定义该函数。
+#         # 使用question方法，将提示结果返回给变量reply，再通过reply的值进行判断。
+#         reply = QtGui.QMessageBox.question(self, u'警告', u'确认退出？', QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
+#
+#         if reply == QtGui.QMessageBox.Yes:
+#             event.accept()
+#         else:
+#             event.ignore()
+#
+# app = QtGui.QApplication(sys.argv)
+# ms = MessageBox()
+# ms.show()
+# sys.exit(app.exec_())
+# endregion
+
+class MessageBoxAndCenter(QtGui.QWidget):
+    def __init__(self, parent=None):
+        QtGui.QWidget.__init__(self)
+        self.resize(550, 450)
+        self.setWindowTitle(u'居中')
+        self.center()
+
+    def center(self):
+            screen = QtGui.QDesktopWidget().screenGeometry()
+            size = self.geometry()
+            self.move((screen.width()-size.width())/2, (screen.height()-size.height())/2)
+
+
+    # 重写QWidget类中的该方法，对于定义这个函数后，程序是如何调用的，还不太了解，有待研究。
+    def closeEvent(self, event): # 定义一个消息提示函数,在pyqt中本身就有closeEvent关闭事件对应的函数，如果我们需要更改，就需要重新定义该函数。
+        # 使用question方法，将提示结果返回给变量reply，再通过reply的值进行判断。
+        reply = QtGui.QMessageBox.question(self, u'警告', u'确认退出？', QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
+
+        if reply == QtGui.QMessageBox.Yes:
+            event.accept()
+        else:
+            event.ignore()
 
 app = QtGui.QApplication(sys.argv)
-quit = Quitbutton()
-quit.show()
+ms = MessageBoxAndCenter()
+ms.show()
 sys.exit(app.exec_())
+
+
+
+
 
 
