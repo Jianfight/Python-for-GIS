@@ -4,7 +4,7 @@ import sys
 # reload(sys)
 # sys.setdefaultencoding('utf-8')
 
-from PyQt4 import QtGui
+from PyQt4 import QtGui, QtCore
 
 # region 简单的图形界面程序
 
@@ -96,33 +96,75 @@ from PyQt4 import QtGui
 # sys.exit(app.exec_())
 # endregion
 
-class MessageBoxAndCenter(QtGui.QWidget):
-    def __init__(self, parent=None):
-        QtGui.QWidget.__init__(self)
-        self.resize(550, 450)
-        self.setWindowTitle(u'居中')
-        self.center()
+# region 将显示的图形界面放置到屏幕的中央
+# class MessageBoxAndCenter(QtGui.QWidget):
+#     def __init__(self, parent=None):
+#         QtGui.QWidget.__init__(self)
+#         self.resize(550, 450)
+#         self.setWindowTitle(u'居中')
+#         self.center()
+#
+#     def center(self):
+#             screen = QtGui.QDesktopWidget().screenGeometry()
+#             size = self.geometry()
+#             self.move((screen.width()-size.width())/2, (screen.height()-size.height())/2)
+#
+#
+#     # 重写QWidget类中的该方法，对于定义这个函数后，程序是如何调用的，还不太了解，有待研究。
+#     def closeEvent(self, event): # 定义一个消息提示函数,在pyqt中本身就有closeEvent关闭事件对应的函数，如果我们需要更改，就需要重新定义该函数。
+#         # 使用question方法，将提示结果返回给变量reply，再通过reply的值进行判断。
+#         reply = QtGui.QMessageBox.question(self, u'警告', u'确认退出？', QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
+#
+#         if reply == QtGui.QMessageBox.Yes:
+#             event.accept()
+#         else:
+#             event.ignore()
+#
+# app = QtGui.QApplication(sys.argv)
+# ms = MessageBoxAndCenter()
+# ms.show()
+# sys.exit(app.exec_())
+# endregion
 
-    def center(self):
-            screen = QtGui.QDesktopWidget().screenGeometry()
-            size = self.geometry()
-            self.move((screen.width()-size.width())/2, (screen.height()-size.height())/2)
+# region 在窗体中添加菜单栏和工具栏
+# class MainWindow(QtGui.QMainWindow):
+#     def __init__ (self, parent=None):
+#         QtGui.QMainWindow.__init__(self)
+#
+#         self.resize(550, 450)
+#         self.setWindowTitle(u'我的主程序')
+#         self.setWindowIcon(QtGui.QIcon('111.ico'))  # 指定使用的图标的位置。
+#
+#         exit = QtGui.QAction(QtGui.QIcon('exit.png'), u'退出', self) # 引入ACTION可以减轻界面构建的难度，一个action对象可以
+#                                                                     # 拥有菜单、文本、图标、快捷方式、状态信息等。
+#         exit.setShortcut('Ctrl+Q') # 创建一个快捷键
+#         exit.setStatusTip(u'退出程序') # 当将鼠标放置在退出选项时，设置状态栏的提示信息
+#
+#         # 构建信号和槽机制
+#         exit.connect(exit, QtCore.SIGNAL('triggered()'), QtGui.qApp, QtCore.SLOT('quit()'))
+#
+#         self.statusBar() # 调用该函数将状态栏的提示信息显示出来
+#
+#         # 设置一个菜单栏
+#         menubar = self.menuBar()
+#         file = menubar.addMenu(u'文件') # 在菜单栏中添加一个名称为文件的项
+#         # file.addAction(exit) # 在文件这个项下方添加退出子项。
+#
+#         # 设置一个工具栏
+#         toolbar = self.addToolBar(u'退出')
+#         toolbar.addAction(exit)
+#
+#         # 添加一个文本编辑器
+#         textEdit = QtGui.QTextEdit()
+#         self.setCentralWidget(textEdit)
+#
+# app = QtGui.QApplication(sys.argv)
+# main = MainWindow()
+# main.show()
+# sys.exit(app.exec_())
+# endregion
 
 
-    # 重写QWidget类中的该方法，对于定义这个函数后，程序是如何调用的，还不太了解，有待研究。
-    def closeEvent(self, event): # 定义一个消息提示函数,在pyqt中本身就有closeEvent关闭事件对应的函数，如果我们需要更改，就需要重新定义该函数。
-        # 使用question方法，将提示结果返回给变量reply，再通过reply的值进行判断。
-        reply = QtGui.QMessageBox.question(self, u'警告', u'确认退出？', QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
-
-        if reply == QtGui.QMessageBox.Yes:
-            event.accept()
-        else:
-            event.ignore()
-
-app = QtGui.QApplication(sys.argv)
-ms = MessageBoxAndCenter()
-ms.show()
-sys.exit(app.exec_())
 
 
 
