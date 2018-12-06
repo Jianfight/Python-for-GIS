@@ -1,9 +1,6 @@
 #-*- coding=utf-8 -*-
 # 关于pyQt5的学习记录，知识来源腾讯课堂的python图形界面编程
 import sys
-# reload(sys)
-# sys.setdefaultencoding('utf-8')
-
 from PyQt4 import QtGui, QtCore
 
 # region 简单的图形界面程序
@@ -163,6 +160,142 @@ from PyQt4 import QtGui, QtCore
 # main.show()
 # sys.exit(app.exec_())
 # endregion
+
+# region BOX布局
+# class Boxlayout(QtGui.QWidget):
+#
+#     def __init__ (self, parent=None):
+#         QtGui.QWidget.__init__(self)
+#
+#         self.setWindowTitle(u'Box布局')
+#
+#         # 定义两个按钮
+#         ok = QtGui.QPushButton(u'确定')
+#         cancel = QtGui.QPushButton(u'取消')
+#
+#         # 创建一个水平的布局
+#         hbox = QtGui.QHBoxLayout()
+#         hbox.addStretch(1) # 默认情况下addStretch(QSpacerItem=0),你有一个layer,里面有三个控件，一个放在最左边，一个放在最右边，
+#                             # 最后一个放在layout的1/3处，这就可以通过addStretch去实现。addStretch()代表添加一个伸缩间隔元素。
+#         hbox.addWidget(ok)   # 按钮属于小部件
+#         hbox.addWidget(cancel) # 添加小部件使用的是addWidget()
+#
+#         # 创建一个竖直的布局
+#         vbox = QtGui.QVBoxLayout()
+#         vbox.addStretch(1)
+#         vbox.addLayout(hbox) # 将创建的水平布局添加到竖直布局中，添加布局使用的是addLayout()
+#
+#         self.setLayout(vbox) # 为整个窗体设置一个垂直布局
+#
+#         self.resize(400,250)
+#
+# app = QtGui.QApplication(sys.argv)
+# b = Boxlayout()
+# b.show()
+# sys.exit(app.exec_())
+# endregion
+
+# region 网格布局
+# class Grildlayout(QtGui.QWidget):
+#
+#     def __init__(self,parent=None):
+#         QtGui.QWidget.__init__(self)
+#
+#         self.setWindowTitle(u'网格布局')
+#
+#         names = [u'清除', u'后退', u'', u'关闭', '7', '8', '9', '/', '4', '5', '6', '*', '1', '2', '3', '-', '0','.', '=','+' ]
+#
+#         grid = QtGui.QGridLayout()
+#         j = 0
+#         pos = [(0,0), (0,1), (0,2), (0,3),
+#                (1,0), (1,1), (1,2), (1,3),
+#                (2,0), (2,1), (2,2), (2,3),
+#                (3,0), (3,1), (3,2), (3,3),
+#                (4,0), (4,1), (4,2), (4,3)]
+#         for i in names:
+#             button = QtGui.QPushButton(i)
+#             if j ==2 :
+#                 grid.addWidget(QtGui.QLabel(u''), pos[j][0], pos[j][1]) # 在格网布局中添加控件是时，参数第一个代表要添加的控件类型，
+#                                                                         # 第二个代表X坐标,第三个代表Y坐标。
+#             else:
+#                 grid.addWidget(button,pos[j][0], pos[j][1])
+#             j += 1
+#
+#         self.setLayout(grid)
+#
+# app = QtGui.QApplication(sys.argv)
+# g = Grildlayout()
+# g.show()
+# sys.exit(app.exec_())
+# endregion
+
+# region 滑动块测试
+# class SigSlot(QtGui.QWidget):
+#     def __init__(self, parent=None):
+#         QtGui.QWidget.__init__(self)
+#
+#         self.setWindowTitle(u'滑动块测试')
+#         lcd = QtGui.QLCDNumber(self) # 该控件用来显示数字
+#         slider = QtGui.QSlider(QtCore.Qt.Horizontal,self) # 添加一个滑动块
+#
+#         # 添加一个垂直布局
+#         vbox = QtGui.QVBoxLayout()
+#         vbox.addWidget(lcd)
+#         vbox.addWidget(slider)
+#
+#         self.setLayout(vbox)
+#         self.connect(slider, QtCore.SIGNAL('valueChanged(int)'), lcd, QtCore.SLOT('display(int)'))
+#
+#         self.resize(550, 450)
+#
+# app = QtGui.QApplication(sys.argv)
+# s = SigSlot()
+# s.show()
+# sys.exit(app.exec_())
+# endregion
+
+# region 使用esc键来退出程序
+# class Esc(QtGui.QWidget):
+#     def __init__(self, parent=None):
+#         QtGui.QWidget.__init__(self)
+#
+#         self.setWindowTitle(u'Esc键退出测试')
+#         # self.connect(self,QtCore.SIGNAL('closeEmiApp()'), QtCore.SLOT('close()'))
+#         self.resize(550, 450)
+#
+#     def keyPressEvent(self, event):
+#         if event.key() == QtCore.Qt.Key_Escape:
+#             self.close()
+#
+# app = QtGui.QApplication(sys.argv)
+# s = Esc()
+# s.show()
+# sys.exit(app.exec_())
+# endregion
+
+# region 设置鼠标单击时发送一个信号(emit())同信号槽函数connect()完成信号与槽的匹配。
+# class Rmit(QtGui.QWidget):
+#     def __init__(self, parent=None):
+#         QtGui.QWidget.__init__(self)
+#
+#         self.setWindowTitle(u'鼠标退出测试')
+#         self.connect(self,QtCore.SIGNAL('closeEmiApp()'), QtCore.SLOT('close()'))
+#         self.resize(550, 450)
+#
+#     def mousePressEvent(self, event):
+#         self.emit(QtCore.SIGNAL('closeEmiApp()')) # emit()代表发出，我们设定鼠标单击时发送一个closeEmiApp信号，配合connect()函数完成
+#                                                   # 信号与槽的匹配。
+# app = QtGui.QApplication(sys.argv)
+# s = Rmit()
+# s.show()
+# sys.exit(app.exec_())
+# endregion
+
+
+
+
+
+
 
 
 
