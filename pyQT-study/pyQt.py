@@ -1,5 +1,6 @@
 #-*- coding=utf-8 -*-
 # 关于pyQt5的学习记录，知识来源腾讯课堂的python图形界面编程
+
 import sys
 from PyQt4 import QtGui, QtCore
 
@@ -123,7 +124,7 @@ from PyQt4 import QtGui, QtCore
 # sys.exit(app.exec_())
 # endregion
 
-# region 在窗体中添加菜单栏和工具栏
+# region 在窗体中添加菜单栏和工具栏(在继承类的时候继承的是QMainWindow而非QWidget)
 # class MainWindow(QtGui.QMainWindow):
 #     def __init__ (self, parent=None):
 #         QtGui.QMainWindow.__init__(self)
@@ -159,7 +160,7 @@ from PyQt4 import QtGui, QtCore
 # main = MainWindow()
 # main.show()
 # sys.exit(app.exec_())
-# endregion
+# endregion(在继承类的时候继承的是QMainWindow而非QWidget)
 
 # region BOX布局
 # class Boxlayout(QtGui.QWidget):
@@ -291,11 +292,189 @@ from PyQt4 import QtGui, QtCore
 # sys.exit(app.exec_())
 # endregion
 
+# region 对话框，进行简单交互
+# class InputDialog(QtGui.QWidget):
+#     def __init__(self, parent=None):
+#         QtGui.QWidget.__init__(self)
+#
+#         self.setGeometry(300, 300, 350, 80) # 设置了窗体的位置和大小
+#         self.setWindowTitle(u'输入对话框')
+#         self.button = QtGui.QPushButton(u'对话', self) # 在窗体中添加一个按钮
+#         self.button.setFocusPolicy(QtCore.Qt.NoFocus) # 取消按钮上的焦点
+#         self.button.move(20,20)
+#         self.connect(self.button, QtCore.SIGNAL('clicked()'), self.showDialog)
+#         self.setFocus()
+#         self.label = QtGui.QLineEdit(self)
+#         self.label.move(130, 20)
+#
+#     def showDialog(self):
+#         # text变量是返回输入的内容，button变量是返回我们在对话框中按下的是确定键还是取消键，该方法是打开输入框
+#         text, button = QtGui.QInputDialog.getText(self, u'输入对话框', u'输入姓名')
+#
+#         if button:
+#             self.label.setText(text)
+#         else:
+#             self.label.setText(u'对话框已被取消')
+#
+# app = QtGui.QApplication(sys.argv)
+# i = InputDialog()
+# i.show()
+# sys.exit(app.exec_())
+# endregion
 
+# region 打开文件(在继承类的时候继承的是QMainWindow而非QWidget)
+# class OpenFile(QtGui.QMainWindow):
+#     def __init__(self, parent=None):
+#         QtGui.QMainWindow.__init__(self)
+#
+#         self.setWindowTitle(u'打开文件')
+#         self.setGeometry(300, 300, 350, 300)
+#         self.setWindowIcon(QtGui.QIcon('111.ico'))  # 指定使用的图标的位置。
+#         self.textEdit = QtGui.QTextEdit() # 添加一个文本编辑器
+#         self.setCentralWidget(self.textEdit)
+#         self.statusBar() # 添加一个状态栏
+#         self.setFocus() # 设置焦点
+#
+#         open = QtGui.QAction(QtGui.QIcon('open.png'), u'打开', self)
+#         open.setShortcut('Ctrl+o')
+#         open.setStatusTip('打开文件')
+#
+#         self.connect(open, QtCore.SIGNAL('triggered()'), self.showFileDialog)
+#
+#         menubar = self.menuBar()
+#         file = menubar.addMenu('文件')
+#         file.addAction(open)
+#
+#     def showFileDialog(self):
+#         filename = QtGui.QFileDialog.getOpenFileName(self, u'打开文件', './') # 打开文件框
+#         file = open(filename)
+#         data = file.read()
+#         self.textEdit.setText(data)
+#
+# app = QtGui.QApplication(sys.argv)
+# qb = OpenFile()
+# qb.show()
+# sys.exit(app.exec_())
+# endregion
 
+# region 复选框
+# class CheckBox(QtGui.QWidget):
+#     def __init__(self, parent=None):
+#         QtGui.QWidget.__init__(self)
+#
+#         self.setGeometry(300, 300, 350, 250)
+#         self.setWindowTitle(u'复选框')
+#         self.cb = QtGui.QCheckBox(u'come baby!',self)
+#         self.cb.setFocusPolicy(QtCore.Qt.NoFocus)
+#         self.cb.move(10,10)
+#
+#         self.connect(self.cb, QtCore.SIGNAL('stateChanged(int)'), self.changeTitle)
+#
+#     def changeTitle(self):
+#         if self.cb.isChecked():
+#             self.setWindowTitle(u'Hellow World!')
+#         else:
+#             self.setWindowTitle(u'Come!!!!!')
+#
+# app = QtGui.QApplication(sys.argv)
+# cb = CheckBox()
+# cb.show()
+# sys.exit(app.exec_())
+# endregion
 
+# region 更改颜色
+# class ToggleButton(QtGui.QWidget):
+#     def __init__(self,parent=None):
+#         QtGui.QWidget.__init__(self)
+#
+#         self.setGeometry(300, 300, 280, 170)
+#         self.setWindowTitle(u'改变颜色')
+#
+#         self.color = QtGui.QColor(0,0,0)
+#
+#         self.red = QtGui.QPushButton(u'红色', self)
+#         self.red.setCheckable(True)  # 确保当按钮被按下时，按钮本身产生被按下的状态
+#         self.red.move(10, 10)
+#         self.connect(self.red, QtCore.SIGNAL('clicked()'), self.setRed)
+#
+#         self.green = QtGui.QPushButton(u'绿色', self)
+#         self.green.setCheckable(True)
+#         self.green.move(10, 60)
+#         self.connect(self.green, QtCore.SIGNAL('clicked()'), self.setGreen)
+#
+#         self.blue = QtGui.QPushButton(u'蓝色', self)
+#         self.blue.setCheckable(True)
+#         self.blue.move(10, 110)
+#         self.connect(self.blue, QtCore.SIGNAL('clicked()'), self.setBlue)
+#
+#         self.square = QtGui.QWidget(self)
+#         self.square.setGeometry(150, 20, 100, 100)
+#         self.square.setStyleSheet('QWidget {background-color:%s}' %self.color.name()) # self.color.name()返回的是颜色对应的
+#                                                                                       # RGB值的十六进制数。
+#
+#         QtGui.QApplication.setStyle(QtGui.QStyleFactory.create('cleanlooks'))
+#
+#     def setRed(self):
+#         if self.red.isChecked():
+#             self.color.setRed(255)
+#         else:
+#             self.color.setRed(0)
+#
+#         self.square.setStyleSheet('QWidget {background-color:%s}' % self.color.name())
+#
+#     def setGreen(self):
+#         if self.green.isChecked():
+#             self.color.setGreen(255)
+#         else:
+#             self.color.setGreen(0)
+#
+#         self.square.setStyleSheet('QWidget {background-color:%s}' % self.color.name())
+#
+#     def setBlue(self):
+#         if self.blue.isChecked():
+#             self.color.setBlue(255)
+#         else:
+#             self.color.setBlue(0)
+#
+#         self.square.setStyleSheet('QWidget {background-color:%s}' % self.color.name())
+#
+# app = QtGui.QApplication(sys.argv)
+# tb = ToggleButton()
+# tb.show()
+# sys.exit(app.exec_())
+# endregion
 
-
+# region 根据滑动块来更改显示的图片
+# class Car(QtGui.QWidget):
+#     def __init__(self, parent=None):
+#         QtGui.QWidget.__init__(self)
+#
+#         self.setGeometry(200, 200, 1000, 400)
+#         self.setWindowTitle(u'GO! GO! GO!')
+#         self.slider = QtGui.QSlider(QtCore.Qt.Horizontal, self)
+#         self.slider.setFocusPolicy(QtCore.Qt.NoFocus)
+#         self.slider.setGeometry(30, 40, 100, 60)
+#         self.connect(self.slider, QtCore.SIGNAL('valueChanged(int)'), self.changeValue)
+#         self.label = QtGui.QLabel(self)
+#         self.label.setPixmap(QtGui.QPixmap('car01.png'))
+#         self.label.setGeometry(160, 40, 800, 400)
+#
+#     def changeValue(self):
+#         pos = self.slider.value()
+#         if pos ==0:
+#             self.label.setPixmap(QtGui.QPixmap('car01.png'))
+#         elif 0< pos <= 30:
+#             self.label.setPixmap(QtGui.QPixmap('car02.png'))
+#         elif 30 < pos <= 80:
+#             self.label.setPixmap(QtGui.QPixmap('car03.png'))
+#         elif pos > 80:
+#             self.label.setPixmap(QtGui.QPixmap('car04.png'))
+#
+# app = QtGui.QApplication(sys.argv)
+# c = Car()
+# c.show()
+# sys.exit(app.exec_())
+# endregion
 
 
 
