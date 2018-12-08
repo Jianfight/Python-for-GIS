@@ -476,10 +476,109 @@ from PyQt4 import QtGui, QtCore
 # sys.exit(app.exec_())
 # endregion
 
+# region 调色盘
+# class color(QtGui.QWidget):
+#     def __init__(self, parent=None):
+#         QtGui.QWidget.__init__(self)
+#
+#         color = QtGui.QColor(255,255,255)
+#         self.setGeometry(300,300,255,255)
+#         self.setWindowTitle(u'调色盘')
+#
+#         self.button = QtGui.QPushButton(u'选择颜色',self)
+#         self.button.setFocusPolicy(QtCore.Qt.NoFocus)
+#         self.button.move(20,20)
+#
+#         self.connect(self.button, QtCore.SIGNAL('clicked()'), self.showDialog)
+#         self.setFocus()
+#
+#         self.widget = QtGui.QWidget(self)
+#         self.widget.setStyleSheet('QWidget{background-color:%s}'%color.name())
+#         self.widget.setGeometry(130,22,100,100)
+#
+#     def showDialog(self):
+#         col = QtGui.QColorDialog.getColor() # 打开调色盘对话框
+#         if col.isValid():
+#             self.widget.setStyleSheet('QWidget{background-color:%s}'%col.name()) # col.name()返回的是所选中颜色的十六位RGB码
+#
+# app = QtGui.QApplication(sys.argv)
+# color = color()
+# color.show()
+# sys.exit(app.exec_())
+# endregion
 
+# region 字体选择
+# class Font(QtGui.QWidget):
+#     def __init__(self, parent=None):
+#         QtGui.QWidget.__init__(self)
+#
+#         self.setGeometry(300,300,250,110)
+#         self.setWindowTitle(u'字体对话框')
+#         self.button = QtGui.QPushButton(u'选择字体', self)
+#         self.button.setFocusPolicy(QtCore.Qt.NoFocus)
+#         self.button.move(20,20)
+#
+#         hbox = QtGui.QHBoxLayout() # 水平布局
+#         hbox.addWidget(self.button)
+#
+#         self.connect(self.button, QtCore.SIGNAL('clicked()'), self.showFontDialog)
+#         self.label = QtGui.QLabel(u'问君能有几多愁，恰似一江春水向东流！', self)
+#         self.label.move(130, 20)
+#         hbox.addWidget(self.label, 1) # 参数1表示标签的大小是可以进行变化的
+#         self.setLayout(hbox)
+#
+#     def showFontDialog(self):
+#         font, button = QtGui.QFontDialog.getFont() # 打开选择字体对话框
+#         if button:
+#             self.label.setFont(font) # 根据选择字体对话框中的选择设定标签的字体
+#
+# app = QtGui.QApplication(sys.argv)
+# font = Font()
+# font.show()
+# sys.exit(app.exec_())
+# endregion
 
-
-
-
-
+# region 进度条
+# class ProgressBar(QtGui.QWidget):
+#     def __init__(self, parent=None):
+#         QtGui.QWidget.__init__(self)
+#
+#         self.setGeometry(300,300,250,150)
+#         self.setWindowTitle(u'进度条')
+#
+#         self.pbar = QtGui.QProgressBar(self) # 创建一个进度条
+#         self.pbar.setGeometry(30,40,200,25)
+#
+#         self.button = QtGui.QPushButton(u'开始', self)
+#         self.button.setFocusPolicy(QtCore.Qt.NoFocus)
+#         self.button.move(40,80)
+#
+#         self.connect(self.button, QtCore.SIGNAL('clicked()'), self.onStart)
+#
+#         self.timer = QtCore.QBasicTimer() # 创建一个定时器
+#
+#         self.step = 0
+#
+#     def onStart(self):
+#         if self.timer.isActive():
+#             self.timer.stop()
+#             self.button.setText(u'开始')
+#         else:
+#             self.timer.start(100, self) # 参数100表示是最大值，当计时器超过最大值时将会产生一个事件，参数self表示这个事件将会被self本体接收
+#             self.button.setText(u'停止')
+#
+#     def timerEvent(self, event): # 该函数为定时器超时后会激发的事件，我们重新将其进行定义。
+#         if self.step >= 100:
+#             self.timer.stop()
+#             self.button.setText(u'重新开始')
+#             self.step = 0
+#             return
+#         self.step += 1
+#         self.pbar.setValue(self.step)
+#
+# app = QtGui.QApplication(sys.argv)
+# text = ProgressBar()
+# text.show()
+# sys.exit(app.exec_())
+# endregion
 
