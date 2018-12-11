@@ -582,3 +582,39 @@ from PyQt4 import QtGui, QtCore
 # sys.exit(app.exec_())
 # endregion
 
+# region 添加日期选择框
+# class Calendar(QtGui.QWidget):
+#     def __init__(self, parent=None):
+#         QtGui.QWidget.__init__(self)
+#
+#         self.setGeometry(300, 300, 350, 300)
+#         self.setWindowTitle(u'日期选择')
+#         self.cal = QtGui.QCalendarWidget(self)
+#         self.cal.setGridVisible(True)  # 将日期设置为表格装显示
+#
+#         self.connect(self.cal, QtCore.SIGNAL('selectionChanged()'), self.showDate)
+#
+#         self.label = QtGui.QLabel()
+#         date = self.cal.selectedDate() # 建立一个日期的对象，方便显示
+#         self.label.setText(str(date.toPyDate())) # 将pyqt4中的日期转换为常见的日期格式，toPyDate()会将数据转换为datetime.date形式
+#                                                     # 并非是文本的格式，所以需要再使用str()对其进行强制转换。
+#
+#         vbox = QtGui.QVBoxLayout()
+#         vbox.addWidget(self.label)
+#         vbox.addWidget(self.cal)
+#         self.setLayout(vbox)
+#
+#     def showDate(self):
+#         date = self.cal.selectedDate()
+#         self.label.setText(str(date)) # 并不对日期格式进行转换，与初始界面的日期格式产生对比
+#
+# app = QtGui.QApplication(sys.argv)
+# text = Calendar()
+# text.show()
+# sys.exit(app.exec_())
+# endregion
+
+
+
+
+
