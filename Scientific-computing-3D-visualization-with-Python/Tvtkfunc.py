@@ -1,9 +1,16 @@
-def ivtk_scene(actors): # 方便使用ivtk来检查我们进行管线的过程
+
+
+def ivtk_scene(actors, *actors2): # 方便使用ivtk来检查我们进行管线的过程
     from tvtk.tools import ivtk
     # 创建一个带Crust(python shell)的窗口
     win = ivtk.IVTKWithCrustAndBrowser()
     win.open()
-    win.scene.add_actor(actors)
+    if actors2 != None:
+        win.scene.add_actor(actors)
+        for i in range(len(actors2)):
+            win.scene.add_actor(actors2[i])
+    else :
+        win.scene.add_actor(actors)
 
     # 修正错误,显示出来的图形子窗口不在主窗口内
     dialog = win.control.centralWidget().widget(0).widget(0)
