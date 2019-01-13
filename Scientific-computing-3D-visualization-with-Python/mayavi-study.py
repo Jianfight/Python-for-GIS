@@ -127,24 +127,152 @@ import numpy as np
 # mlab.show()
 # endregion
 
-# 鼠标选取交互操作
-# 选取红色小球问题分析
+# region 鼠标选取交互操作
+# # 鼠标选取交互操作
+# # 选取红色小球问题分析
+#
+# ######场景初始化######
+# figure = mlab.gcf()
+# # 添加该语句是为了增加小球的绘制速度，在构建小球时，不允许绘制器绘制小球
+# figure.scene.disable_render = True
+#
+# # 用mlab.points3d建立红色和白色小球的集合
+# x1, y1, z1 = np.random.random((3, 10))
+# red_glyphs = mlab.points3d(x1, y1, z1, color=(1,0,0), resolution=10) # resolution可以理解为小球的分辨率
+#
+# x2, y2, z2 = np.random.random((3, 10))
+# white_glyphs = mlab.points3d(x2, y2, z2, color=(0.9,0.9,0.9), resolution=10)
+#
+# # 当所有小球构建完成后，再统一绘制,这是一种在有多个模型时，为了加快显示速度而使用的方法。
+# figure.scene.disable_render = False
+#
+#
+# # 绘制选取框，并放在第一个小球上
+# outline = mlab.outline(line_width=3)
+# outline.outline_mode = 'cornered'
+# outline.bounds = (x1[0] - 0.1, x1[0] + 0.1,
+#                   y1[0] - 0.1, y1[0] + 0.1,
+#                   z1[0] - 0.1, z1[0] + 0.1,
+#                   )
+# # 获取小球的顶点坐标列表
+# glyph_points = red_glyphs.glyph.glyph_source.glyph_source.output.points.to_array()
+# # 当选取事件发生时，调用此函数
+# def picker_callback(picker):
+#     if picker.actor in red_glyphs.actor.actors:
+#         # print('11111')
+#         # 计算那个小球被选取
+#         # 计算被选取的小球的ID号
+#         point_id = int(picker.point_id / glyph_points.shape[0]) # shape[0]会返回该小球有多少个顶点,int函数会向下取整
+#         # 如果没有小球被选取，则point_id = -1
+#         if point_id != -1:
+#             # 计算与此红色小球相关的坐标
+#             x , y, z = x1[point_id], y1[point_id], z1[point_id]
+#             # 将外框移到小球上
+#             outline.bounds = (
+#                 x - 0.1, x + 0.1,
+#                 y - 0.1, y + 0.1,
+#                 z - 0.1, z + 0.1,
+#             )
+#
+# picker = figure.on_mouse_pick(picker_callback)
+# # 为了提高选取小球时的精度，设置tolerance参数，提高选取精度
+# picker.tolerance = 0.01
+#
+# mlab.title('Click on red balls.')
+# mlab.show()
+# endregion
 
-# 用mlab.points3d建立红色和白色小球的集合
-x1, y1, z1 = np.random.random((3, 10))
-red_glyphs = mlab.points3d(x1, y1, z1, color=(1,0,0), resolution=10) # resolution可以理解为小球的分辨率
+# region 标量数据的可视化
+# # 标量数据的可视化
+# # 生成标量数据
+# x, y, z = np.ogrid[-10:10:20j, -10:10:20j, -10:10:20j]
+# s = np.sin(x*y*z)/(x*y*z)
+# print(s)
+#
+# # # 等值面的绘制
+# # # mlab.contour3d(s)
+# #
+# # # 切平面的绘制
+# # # 绘制x轴的切平面
+# # mlab.pipeline.image_plane_widget(mlab.pipeline.scalar_field(s),
+# #                                  plane_orientation='x_axes',
+# #                                  slice_index=10,
+# #                                  )
+# # # 绘制y轴的切平面
+# # mlab.pipeline.image_plane_widget(mlab.pipeline.scalar_field(s),
+# #                                  plane_orientation='y_axes',
+# #                                  slice_index=10,
+# #                                  )
+# # # 绘制模型的外轮廓线
+# # mlab.outline()
+#
+# # 复合观测方法
+# # 将数据转换为标量场数据
+# src = mlab.pipeline.scalar_field(s)
+#
+# mlab.pipeline.iso_surface(src, contours=[s.min()+0.1*s.ptp(), ], opacity=0.3)
+# # mlab.pipeline.iso_surface(src, contours=[s.min()+0.1*s.ptp(), ])
+# mlab.pipeline.image_plane_widget(src,
+#                                  plane_orientation='z_axes',
+#                                  slice_index=10,
+#                                  )
+# mlab.show()
+# endregion
 
-x2, y2, z2 = np.random.random((3, 10))
-white_glyphs = mlab.points3d(x2, y2, z2, color=(0.9,0.9,0.9), resolution=10)
-
-# 绘制选取框，并放在第一个小球上
-outline = mlab.outline(line_width=3)
-outline.outline_mode = 'cornered'
-outline.bounds = (x1[0] - 0.1, x1[0] + 0.1,
-                  y1[0] - 0.1, y1[0] + 0.1,
-                  z1[0] - 0.1, z1[0] + 0.1,
-                  )
-
+# region 矢量数据的可视化
+# # 矢量数据的可视化
+# # 创建数据
+# x, y, z = np.mgrid[0:1:20j, 0:1:20j, 0:1:20j]
+# u = np.sin(np.pi*x) * np.cos(np.pi*z)
+# v = -2*np.sin(np.pi*y) * np.cos(2*np.pi*z)
+# w = np.cos(np.pi*x)*np.sin(np.pi*z) + np.cos(np.pi*y)*np.sin(2*np.pi*z)
+#
+# # 绘制图形
+# # mlab.quiver3d(u,v,w)
+#
+# # 使用masking进行数据的抽稀后可视化
+# # src = mlab.pipeline.vector_field(u, v, w)
+# # mlab.pipeline.vectors(src, mask_points=10, scale_factor=2.0)
+#
+# # Cut Plane切面可视化
+# # src = mlab.pipeline.vector_field(u, v, w)
+# # mlab.pipeline.vector_cut_plane(src, mask_points=10, scale_factor=2.0)
+#
+# # 级数的等值面可视化
+# # src = mlab.pipeline.vector_field(u,v,w)
+# # magnitude = mlab.pipeline.extract_vector_norm(src)
+# # mlab.pipeline.iso_surface(magnitude, contours=[2.0, 0.5])
+#
+# # 流线（Flow）的可视化,在某些时候他可以表示流体力学的轨迹或者电磁场线。
+# # flow = mlab.flow(u,v,w, seed_scale=1,
+# #                  seed_resolution=5,
+# #                  integration_direction='both'
+# #                  )
+#
+# # 复合观测
+# src = mlab.pipeline.vector_field(u,v,w)
+# magnitude = mlab.pipeline.extract_vector_norm(src)
+# iso = mlab.pipeline.iso_surface(magnitude, contours=[2.0,], opacity=0.3)
+# vec = mlab.pipeline.vectors(magnitude, mask_points=40,
+#                             line_width=1,
+#                             color=(0.8,0.8,0.8),
+#                             scale_factor=4.0
+#                             )
+# flow = mlab.pipeline.streamline(magnitude, seedtype='plane',
+#                                 seed_visible=False,
+#                                 seed_scale=0.5,
+#                                 seed_resolution=1,
+#                                 linetype='ribbon',
+#                                 )
+# vcp = mlab.pipeline.vector_cut_plane(magnitude, mask_points=2,
+#                                      scale_factor=4,
+#                                      colormap='jet',
+#                                      plane_orientation='x_axes'
+#                                      )
+#
+# mlab.outline()
+# mlab.show()
+# endregion
 
 
 
